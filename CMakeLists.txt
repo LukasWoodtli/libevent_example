@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.27)
+project(libevent_example C)
+
+set(CMAKE_C_STANDARD 11)
+
+find_package(PkgConfig REQUIRED)
+if(PKG_CONFIG_FOUND)
+    pkg_search_module(LIBEVENT libevent)
+    if (LIBEVENT_FOUND)
+        message(STATUS "Found libevent ${LIBEVENT_FOUND}")
+        message(STATUS "libevent inc : ${LIBEVENT_INCLUDE_DIRS}")
+        message(STATUS "libevent lib : ${LIBEVENT_LINK_LIBRARIES}")
+    else()
+        message(FATAL_ERROR "libevent not found")
+    endif()
+endif()
+
+add_executable(libevent_example main.c)
+target_include_directories(libevent_example PRIVATE ${LIBEVENT_INCLUDE_DIRS})
+target_link_libraries(libevent_example PRIVATE ${LIBEVENT_LINK_LIBRARIES})
